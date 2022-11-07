@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=800, initial-scale=1.0" />
+    <title>Banquise Admin</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+    <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+    <script src="client-functions.js"></script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <h3>Games</h3>
+      <div id="singleGameView" style="display: none" class="p-4">
+        <button onclick="tableView()" type="button" class="btn btn-primary">◀️ Table view</button>
+        <div class="d-flex flex-direction-row">
+          <div id="gameContainer"></div>
+          <div class="px-3">
+            <div class="card p-3 mb-2" style="color: #202020 !important">
+              <h4>Infos</h4>
+              <div id="gameInfos" class="p-3 rounded-3" style="background-color: #f8f9fa";></div>
+            </div>
+            <div class="card p-3" style="color: #202020 !important">
+              <h4>Assets</h4>
+              <div id="assetsView" style="max-height: 500px; overflow-y: auto"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tableContainer" id="tableContainer">
+        <div id="wrapper"></div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    var gamesMap;
+    const assetLinkMaker = (id) => {
+      return (
+        "https://devback.banquise.app/v1/storage/buckets/62e0fd376bc80b0bcf70/files/" +
+        id +
+        "/view?project=62e0fcfca3b3c5124f16&fbclid=IwAR09oYlgW-jiVSb9_tMCdx-cEUc8gvmbE6QUlC8VNIvZY0-gDM3AFjzMHA0"
+      );
+    };
+
+    function loadGames() {
+      document.getElementById("singleGameView").style.display = "none";
+      document.getElementById("tableContainer").innerHTML = '<div id="wrapper"></div>';
+      const grid = new gridjs.Grid({
+        columns: ["id", "title", "owner_id", "public", "category", "updatedAt", "createdAt"],
+        sort: true,
+        search: true,
+        server: {
+          url: "/games",
+          then: (data) => {
+            gamesMap = data.response.documents;
+            return data.response.documents.map((game) => [
+              game.$id,
+              game.title,
+              game.owner,
+              String(game.public),
+              game.category.join(", "),
+              game.$updatedAt.split("T")[0],
+              game.$createdAt.split("T")[0],
+            ]);
+          },
+        },
+      }).render(document.getElementById("wrapper"));
+      grid.on("rowClick", (...args) => loadSingleGame(args[1]["_cells"][0]["data"]));
+    }
+    loadGames();
+
+    function tableView() {
+      document.getElementById("tableContainer").style.display = "";
+      document.getElementById("singleGameView").style.display = "none";
+      document.getElementById("gameContainer").innerHTML = "";
+    }
+
+    async function loadSingleGame(currentGameId) {
+      document.getElementById("tableContainer").style.display = "none";
+      document.getElementById("singleGameView").style.display = "";
+      var currentGame = (await fetch(`/game/${currentGameId}`)).json();
+      currentGame.then((response) => {
+        var currentGameData = response["response"];
+        if(currentGameData["public"] == true){
+            var link = "https://banquise.app/#/minimal_view/" + currentGameData["$id"];
+            document.getElementById("gameContainer").innerHTML = `<iframe height="640" width="360" src="${link}"></iframe>`;
+        }
+        //
+        var gameData = JSON.parse(currentGameData["json_game"]);
+
+        // Handling game infos
+        var infoElements = `
+            <div>Title : ${currentGameData["title"]}</div>
+            <div>Description : ${currentGameData["description"]}</div>
+            <div>Last Update : ${currentGameData["$updatedAt"].split("T")[0]}</div>
+            <div>NSFW : ${currentGameData["nsfw"]}</div>
+        `;
+        document.getElementById("gameInfos").innerHTML = infoElements;
+        
+        //  Handling game assets
+        var gameAssets = [];
+        for (objIndex in gameData["objects"]) {
+          gameAssets.push(gameData["objects"][objIndex]["animImages"].flat());
+        }
+        gameAssets = gameAssets.flat();
+        document.getElementById("assetsView").innerHTML = gameAssets.map((e) => {
+          return `<img style="width:150px; height:150px;object-fit: contain;" src="${assetLinkMaker(e)}">`;
+        });
+      });
+    }
+  </script>
+</html>

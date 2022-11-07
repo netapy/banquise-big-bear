@@ -1,0 +1,9 @@
+.tableContainer > *{
+    font-size: 8!important;
+}
+
+body{
+    background-color: #202020;
+    color: white;
+}
+

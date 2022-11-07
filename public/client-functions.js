@@ -1,6 +1,5 @@
 function loadUsers() {
   document.getElementById("tableContainer").innerHTML = '<div id="wrapper"></div>';
-
   new gridjs.Grid({
     columns: ["user_id", "user_name", "email", "registration"],
     server: {
@@ -20,7 +19,6 @@ function loadGames() {
     server: {
       url: "/games",
       then: (data) => {
-        console.log(data.response.documents);
         return data.response.documents.map((game) => [game.$id, game.title, game.owner, String(game.public), game.category.join(", "), game.$updatedAt.split("T")[0], game.$createdAt.split("T")[0]]);
       },
     },

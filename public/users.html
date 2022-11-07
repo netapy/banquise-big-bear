@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=800, initial-scale=1.0" />
+    <title>Banquise Admin</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+    <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+    <script src="client-functions.js"></script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <h3>Users</h3>
+      <div class="tableContainer" id="tableContainer">
+        <div id="wrapper"></div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    function loadUsers() {
+      document.getElementById("tableContainer").innerHTML = '<div id="wrapper"></div>';
+      new gridjs.Grid({
+        columns: ["user_id", "user_name", "email", "registration"],
+        server: {
+          url: "/users",
+          then: (data) => {
+            console.log(data.response.users);
+            return data.response.users.map((user) => [user.$id, user.name, user.email, user.registration]);
+          },
+        },
+      }).render(document.getElementById("wrapper"));
+    }
+    loadUsers();
+
+  </script>
+</html>

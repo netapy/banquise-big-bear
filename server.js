@@ -5,7 +5,6 @@ require("dotenv").config();
 
 const app = express();
 
-app.set("view engine", "ejs");
 app.use(express.static("public"));
 
 //
@@ -28,7 +27,7 @@ app.get("/users", (req, res) => {
 
 app.get("/games", (req, res) => {
   const databases = new sdk.Databases(client);
-  const promise = databases.listDocuments("62e0fd281976e7171db9", "62e0fe08a4a5d6592df2", [sdk.Query.limit(100)]);
+  const promise = databases.listDocuments("62e0fd281976e7171db9", "62e0fe08a4a5d6592df2", [sdk.Query.limit(100), sdk.Query.orderDesc("$updatedAt")]);
   promise.then(
     function (response) {
       res.json({ response });
@@ -39,8 +38,21 @@ app.get("/games", (req, res) => {
   );
 });
 
-app.get("/", (req, res) => {
-  res.render("index", { gameId: "Worlzeeeegezgd" });
+app.get("/game/:gameId", (req, res) => {
+  var gameId = req.params.gameId;
+  const databases = new sdk.Databases(client);
+  const promise = databases.getDocument("62e0fd281976e7171db9", "62e0fe08a4a5d6592df2", gameId);
+  promise.then(
+    function (response) {
+      res.json({ response });
+    },
+    function (error) {
+      res.json(error);
+    }
+  );
 });
+
+
+
 
 app.listen(3000);
