@@ -24,7 +24,7 @@
 
 <main class="container-fluid">
   <div class="p-3 d-flex align-items-center justify-content-center mb-3">
-    <img src="src/assets/logo_white_mask_transp.png" width="90" class="mb-2 me-3" alt="logo" />
+    <img src="/logo_white_mask_transp.png" width="90" class="mb-2 me-3" alt="logo" />
     <h1 style="font-size: 4rem;">Big Bear</h1>
   </div>
   {#if !connected}
