@@ -2,7 +2,7 @@
   import { closeModal } from "svelte-modals";
   import { fly } from "svelte/transition";
   import { onMount } from "svelte";
-  import { databases } from "../../store";
+  import { databases, getUserName } from "../../store";
 
   // provided by <Modals />
   export let isOpen;
@@ -32,6 +32,13 @@
       "/view?project=62e0fcfca3b3c5124f16&fbclid=IwAR09oYlgW-jiVSb9_tMCdx-cEUc8gvmbE6QUlC8VNIvZY0-gDM3AFjzMHA0"
     );
   };
+
+  let newRating = 0;
+  let editingRating = false;
+  const editRating = ()=>{
+    databases.updateDocument("62e0fd281976e7171db9", "6384c64eceb6255252f2", gameId, {"rating":newRating});
+    editingRating = false;
+  }
 </script>
 
 {#if isOpen}
@@ -58,12 +65,32 @@
                         <td>{result["owner"]}</td>
                       </tr>
                       <tr>
+                        <th scope="row">Owner_name</th>
+                        <td>
+                          {#await databases.getDocument("633fe0ac171c362df477", "633fe0baf186f65a0376", result["owner"]) then user_profile}
+                            <td>{user_profile["user_name"]}</td>
+                          {/await}
+                        </td>
+                      </tr>
+                      <tr>
                         <th scope="row">Public</th>
                         <td>{result["public"]}</td>
                       </tr>
                       <tr>
                         <th scope="row">Last update</th>
                         <td>{result["$updatedAt"].split("T")[0]}</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Rating 🏆</th>
+                        {#await databases.getDocument("62e0fd281976e7171db9", "6384c64eceb6255252f2", gameId) then ranking}
+                          {#if !editingRating}
+                          <td>{newRating == 0 ? ranking["rating"] : newRating}</td>
+                          <td on:click={()=>editingRating = true} style="cursor:pointer;">✏️</td>
+                          {:else}
+                          <td><input type="number" bind:value={newRating}></td>
+                          <td on:click={editRating} style="cursor:pointer;">✅</td>
+                          {/if}
+                        {/await}
                       </tr>
                     </tbody>
                   </table>
@@ -76,15 +103,16 @@
                     {/each}
                   </div>
                 </div>
-                <div class="p-2 mt-3 d-flex align-items-center justify-content-around">
-                  <div class="buttonBqz hvr-grow">
+                <div class="p-2 mt-3 d-flex align-items-center justify-content-around flex-wrap">
+                  <div class="buttonBqz hvr-grow  mb-1">
                     <a
                       href="https://devback.banquise.app/console/project-62e0fcfca3b3c5124f16/databases/database-62e0fd281976e7171db9/collection-62e0fe08a4a5d6592df2/document-{gameId}"
                       target="_blank"
                       rel="noopener noreferrer">Appwrite link ✏️</a
                     >
                   </div>
-                  <div class="buttonBqz  hvr-grow">aegionae</div>
+                  <!-- <div class="buttonBqz  hvr-grow mb-1" style="background-color:#EDC3C3">-50 🏆</div>
+                  <div class="buttonBqz  hvr-grow mb-1" style="background-color:#DBECE1">+50 🏆</div> -->
                 </div>
               </div>
               <div />
