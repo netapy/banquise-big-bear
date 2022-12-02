@@ -62,7 +62,7 @@
   <div>{gamesData.length} games | {gamesData.filter((x) => x["public"] == true).length} posted games</div>
 </div>
 <div class="p-3">
-  <h3>Table</h3>
+  <h3>All games</h3>
   <div id="tableWrapper" />
 </div>
 <Modals>

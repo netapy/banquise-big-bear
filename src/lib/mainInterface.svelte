@@ -1,6 +1,7 @@
 <script>
   import Users from "./users/users.svelte";
   import Games from "./games/games.svelte";
+  import Assets from "./assets/assets.svelte";
   let currentMenu = "users";
 </script>
 
@@ -19,7 +20,7 @@
     {:else if currentMenu == "games"}
       <Games />
     {:else if currentMenu == "assets"}
-      <div>assets</div>
+      <Assets/>
     {:else if currentMenu == "stats"}<div>stats</div>
     {/if}
   </div>

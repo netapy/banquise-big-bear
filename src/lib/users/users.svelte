@@ -50,7 +50,7 @@
   <div>{userData.length} users | {userData.filter((x) => dateFilter(x["$createdAt"])).length} new users in last 7 days</div>
 </div>
 <div class="p-3">
-  <h3>Table</h3>
+  <h3>All users</h3>
   <div id="tableWrapper" />
 </div>
 
