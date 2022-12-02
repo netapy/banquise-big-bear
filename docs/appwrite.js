@@ -1971,7 +1971,7 @@ function numberIsNaN (obj) {
 
 var GetIntrinsic = require('get-intrinsic');
 
-var callBind = require('.');
+var callBind = require('./');
 
 var $indexOf = callBind(GetIntrinsic('String.prototype.indexOf'));
 
@@ -12081,7 +12081,7 @@ module.exports = typeof self == 'object' ? self.FormData : window.FormData;
 const URL = require('url').URL;
 const axios = require('axios');
 const FormData = require('form-data');
-const AppwriteException = require('./exception.js.js');
+const AppwriteException = require('./exception.js');
 
 class Client {
     static CHUNK_SIZE = 5*1024*1024; // 5MB
@@ -17977,22 +17977,22 @@ class Users extends Service {
 module.exports = Users;
 
 },{"../client.js":86,"../exception.js":87,"../inputFile.js":89,"../service.js":93,"fs":1,"stream":30,"util":51}],"node-appwrite":[function(require,module,exports){
-const Client = require('./lib/client.js.js');
-const Query = require('./lib/query.js.js');
-const Permission = require('./lib/permission.js.js');
-const Role = require('./lib/role.js.js');
-const ID = require('./lib/id.js.js');
-const InputFile = require('./lib/inputFile.js.js');
-const AppwriteException = require('./lib/exception.js.js');
-const Account = require('./lib/services/account.js.js');
-const Avatars = require('./lib/services/avatars.js.js');
-const Databases = require('./lib/services/databases.js.js');
-const Functions = require('./lib/services/functions.js.js');
-const Health = require('./lib/services/health.js.js');
-const Locale = require('./lib/services/locale.js.js');
-const Storage = require('./lib/services/storage.js.js');
-const Teams = require('./lib/services/teams.js.js');
-const Users = require('./lib/services/users.js.js');
+const Client = require('./lib/client.js');
+const Query = require('./lib/query.js');
+const Permission = require('./lib/permission.js');
+const Role = require('./lib/role.js');
+const ID = require('./lib/id.js');
+const InputFile = require('./lib/inputFile.js');
+const AppwriteException = require('./lib/exception.js');
+const Account = require('./lib/services/account.js');
+const Avatars = require('./lib/services/avatars.js');
+const Databases = require('./lib/services/databases.js');
+const Functions = require('./lib/services/functions.js');
+const Health = require('./lib/services/health.js');
+const Locale = require('./lib/services/locale.js');
+const Storage = require('./lib/services/storage.js');
+const Teams = require('./lib/services/teams.js');
+const Users = require('./lib/services/users.js');
 
 module.exports = {
     Client,
