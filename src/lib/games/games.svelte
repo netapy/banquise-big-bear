@@ -4,6 +4,9 @@
   import { onMount } from "svelte";
   import "../../appwrite.js";
   import { databases, query } from "../../store.js";
+  import { Modals, closeModal, openModal } from "svelte-modals";
+  import Modal from "./gameviewModal.svelte";
+  import { fade } from "svelte/transition";
 
   let grid;
   let gamesData = [];
@@ -36,7 +39,7 @@
         grid.on("rowClick", (...args) => {
           console.log(args[1]["_cells"][0]["data"]);
           selectedId = args[1]["_cells"][0]["data"];
-          promiseSelected = databases.getDocument("62e0fd281976e7171db9", "62e0fe08a4a5d6592df2", args[1]["_cells"][0]["data"]);
+          handleClick(selectedId);
         });
       },
       (e) => {
@@ -48,34 +51,31 @@
     buildTable();
   });
 
-  let promiseSelected;
+  function handleClick(id) {
+    openModal(Modal, { gameId: id });
+  }
+
 </script>
 
 <div class="p-3 mb-3">
   <h3>Key data</h3>
   <div>{gamesData.length} games | {gamesData.filter((x) => x["public"] == true).length} posted games</div>
 </div>
-{#if selectedId != ""}
-  <div class="p-3 mb-3">
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <h3>🕹️ Selected content <span class="ms-2" on:click={() => (selectedId = "")}>✖️</span></h3>
-    {#await promiseSelected then result}
-      <div class="d-flex flex-row">
-        <div>
-          <iframe height="640" width="360" src={"https://banquise.app/#/minimal_view/" + result["$id"]} title="Content" />
-        </div>
-        <div class="p-3">
-          {result["title"]}
-        </div>
-        <div />
-      </div>
-    {/await}
-  </div>
-{/if}
 <div class="p-3">
   <h3>Table</h3>
   <div id="tableWrapper" />
 </div>
+<Modals>
+  <div slot="backdrop" class="backdrop" on:click={closeModal} transition:fade />
+</Modals>
 
 <style>
+  .backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
 </style>

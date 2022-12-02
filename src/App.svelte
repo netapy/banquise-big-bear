@@ -22,13 +22,13 @@
   };
 </script>
 
-<main class="container-fluid">
-  <div class="p-3 d-flex align-items-center justify-content-center mb-3">
+<main class="container-fluid {!connected ? "d-flex align-items-center justify-content-center h-100 flex-column" :""}" style="min-height: 90vh;">
+  <div class="p-3 d-flex align-items-center justify-content-center">
     <img src="/logo_white_mask_transp.png" width="90" class="mb-2 me-3" alt="logo" />
     <h1 style="font-size: 4rem;">Big Bear</h1>
   </div>
   {#if !connected}
-    <div class="p-5 text-center">
+    <div class="p-1 text-center">
       <input  style="width: 400px;" type="text" bind:value={apiKey} placeholder="Secret...🤫" />
       <button class="buttonBqz" on:click={setClientKey}>☑️</button>
     </div>
