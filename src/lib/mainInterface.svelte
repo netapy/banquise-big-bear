@@ -2,17 +2,23 @@
   import Users from "./users/users.svelte";
   import Games from "./games/games.svelte";
   import Assets from "./assets/assets.svelte";
+  import Stats from "./stats/stats.svelte";
   let currentMenu = "users";
+
+
+  const disconnect = (e)=>{
+    localStorage.clear();
+    window.location.reload();
+  }
 </script>
 
 <div class="w-100 main-container">
+  <button class="" style="position:absolute; top:0px; right:0px; border-radius:50%; background-color:transparent; border:none;" on:click={disconnect}>🧹</button>
   <div class="toolbar">
+    <div class="tb-element hvr-grow {currentMenu == 'stats' ? 'selected' : ''}" on:click={() => (currentMenu = "stats")} on:keydown={(e) => {}}>📊 Stats</div>
     <div class="tb-element hvr-grow {currentMenu == 'users' ? 'selected' : ''}" on:click={() => (currentMenu = "users")} on:keydown={(e) => {}}>🙋 Users</div>
     <div class="tb-element hvr-grow {currentMenu == 'games' ? 'selected' : ''}" on:click={() => (currentMenu = "games")} on:keydown={(e) => {}}>🕹️ Games</div>
-    <div class="tb-element hvr-grow {currentMenu == 'assets' ? 'selected' : ''}" on:click={() => (currentMenu = "assets")} on:keydown={(e) => {}}>
-      🖼️ Assets
-    </div>
-    <div class="tb-element hvr-grow {currentMenu == 'stats' ? 'selected' : ''}" on:click={() => (currentMenu = "stats")} on:keydown={(e) => {}}>📊 Stats</div>
+    <div class="tb-element hvr-grow {currentMenu == 'assets' ? 'selected' : ''}" on:click={() => (currentMenu = "assets")} on:keydown={(e) => {}}>🖼️ Assets</div>
   </div>
   <div class="content p-4 mt-3">
     {#if currentMenu == "users"}
@@ -21,7 +27,8 @@
       <Games />
     {:else if currentMenu == "assets"}
       <Assets/>
-    {:else if currentMenu == "stats"}<div>stats</div>
+    {:else if currentMenu == "stats"}
+      <Stats/>
     {/if}
   </div>
 </div>
