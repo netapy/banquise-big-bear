@@ -82,6 +82,7 @@
     }
     return idMap;
   }
+  
   function handleClick(id) {
     openModal(Modal, { gameId: id });
   }

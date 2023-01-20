@@ -46,7 +46,13 @@
     }
 
     // Extract the labels and data from the dateCounts object
-    const labels = allDates.map((d) => d.toLocaleDateString("en-US", { day: "2-digit", month: "2-digit", year: "2-digit" }));
+    const labels = allDates.map((d) =>
+      d.toLocaleDateString("en-US", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "2-digit",
+      })
+    );
     let data = allDates.map((d) => dateCounts[d]);
 
     // Cumulatively sum the data
@@ -87,11 +93,11 @@
 
   const gamesGraphGeneration = async () => {
     // Get list of games from the databases object
-    let games = await databases.listDocuments("62e0fd281976e7171db9", "62e0fe08a4a5d6592df2", [
-      query.limit(100),
-      query.equal("public", true),
-      query.notEqual("$id", ""),
-    ]);
+    let games = await databases.listDocuments(
+      "62e0fd281976e7171db9",
+      "62e0fe08a4a5d6592df2",
+      [query.limit(100), query.equal("public", true), query.notEqual("$id", "")]
+    );
 
     // Extract the dates that the games were published
     const datelist = games.documents.map((x) => x.$updatedAt);
@@ -125,7 +131,13 @@
     }
 
     // Extract the labels and data from the dateCounts object
-    const labels = allDates.map((d) => d.toLocaleDateString("en-US", { day: "2-digit", month: "2-digit", year: "2-digit" }));
+    const labels = allDates.map((d) =>
+      d.toLocaleDateString("en-US", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "2-digit",
+      })
+    );
     let data = allDates.map((d) => dateCounts[d]);
 
     // Cumulatively sum the data
@@ -145,7 +157,7 @@
       tooltip: {},
       xAxis: {
         data: labels,
-        interval:4
+        interval: 4,
         //min: 0,
         //max: 10,
       },
@@ -168,6 +180,7 @@
   };
 </script>
 
+
 <div class="row py-3">
   <div class="col-6">
     <div id="chartcontainerUsers" style="width: 100%; height:400px" />
@@ -175,4 +188,16 @@
   <div class="col-6">
     <div id="chartcontainerGames" style="width: 100%; height:400px" />
   </div>
+</div>
+<div style="height:90vh; border-radius:20px;">
+  <iframe
+    style="border-radius:20px;"
+    title="Banquise Analytics"
+    src="https://home.banquise.app/index.php?module=Widgetize&action=iframe&moduleToWidgetize=Dashboard&actionToWidgetize=index&idSite=1&period=week&date=yesterday&token_auth="
+    frameborder="0"
+    marginheight="0"
+    marginwidth="0"
+    width="100%"
+    height="100%"
+  />
 </div>
