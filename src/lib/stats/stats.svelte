@@ -193,7 +193,7 @@
   <iframe
     style="border-radius:20px;"
     title="Banquise Analytics"
-    src="https://home.banquise.app/index.php?module=Widgetize&action=iframe&moduleToWidgetize=Dashboard&actionToWidgetize=index&idSite=1&period=week&date=yesterday&token_auth="
+    src="https://home.banquise.app/index.php?module=Widgetize&action=iframe&moduleToWidgetize=Dashboard&actionToWidgetize=index&idSite=1&period=week&date=yesterday"
     frameborder="0"
     marginheight="0"
     marginwidth="0"
