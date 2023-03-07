@@ -13,7 +13,7 @@
 </script>
 
 <div class="w-100 main-container">
-  <div style="opacity:.2; position:absolute; top:0px; left:0px; padding:5px;">v. 1.0.2</div>
+  <div style="opacity:.2; position:absolute; top:0px; left:0px; padding:5px;">v. 1.1</div>
   <button class="" style="position:absolute; top:0px; right:0px; border-radius:50%; background-color:transparent; border:none;" on:click={disconnect}>🧹</button>
   <div class="toolbar">
     <div class="tb-element hvr-grow {currentMenu == 'stats' ? 'selected' : ''}" on:click={() => (currentMenu = "stats")} on:keydown={(e) => {}}>📊 Stats</div>
