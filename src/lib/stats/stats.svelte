@@ -181,6 +181,18 @@
 </script>
 
 
+<div style="height:90vh; border-radius:20px;">
+  <iframe
+    style="border-radius:20px;"
+    title="Banquise Analytics"
+    src="https://home.banquise.app/"
+    frameborder="0"
+    marginheight="0"
+    marginwidth="0"
+    width="100%"
+    height="100%"
+  />
+</div>
 <div class="row py-3">
   <div class="col-6">
     <div id="chartcontainerUsers" style="width: 100%; height:400px" />
@@ -188,16 +200,4 @@
   <div class="col-6">
     <div id="chartcontainerGames" style="width: 100%; height:400px" />
   </div>
-</div>
-<div style="height:90vh; border-radius:20px;">
-  <iframe
-    style="border-radius:20px;"
-    title="Banquise Analytics"
-    src="https://home.banquise.app/index.php?module=Widgetize&action=iframe&moduleToWidgetize=Dashboard&actionToWidgetize=index&idSite=1&period=week&date=yesterday"
-    frameborder="0"
-    marginheight="0"
-    marginwidth="0"
-    width="100%"
-    height="100%"
-  />
 </div>
