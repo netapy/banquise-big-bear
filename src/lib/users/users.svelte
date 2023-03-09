@@ -9,12 +9,15 @@
 
   let userData = [];
   let idMap = {};
+  let userCount;
 
   const buildTable = () => {
     const promise = users.list([query.limit(100), query.orderDesc("$createdAt")]);
     promise.then(
       async (r) => {
+        
         userData = r["users"];
+        userCount = r["total"]
         idMap = await getUserNames(userData.map((x) => x["$id"]));
         grid = new Grid({
           search: true,
@@ -65,7 +68,7 @@
 <div class="p-3 mb-3 mx-auto">
   <h3>Key data</h3>
   <div>
-    {userData.length} users | {userData.filter((x) =>
+    {userCount} users | {userData.filter((x) =>
       dateFilter(x["$createdAt"])
     ).length} new users in last 7 days
   </div>
