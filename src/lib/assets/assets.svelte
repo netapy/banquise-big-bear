@@ -19,16 +19,13 @@
       localStorage.getItem("clef").substring(0, 10)
     );
 
-    let fileExists = false;
     try {
-      let existsio = await storageprov.getFile("62e0fd376bc80b0bcf70","BQZ-" + file_id + "0");
-      fileExists = true;
-    } catch (error) {
-      fileExists = false;
+      await storageprov.getFile("62e0fd376bc80b0bcf70","BQZ-" + file_id + "0");
       alert("ID already exists. Change le batard !");
       return;
+    } catch (error) {
+      console.log("try didn't succeed");
     }
-    console.log("ii");
 
     for (var fileIndex in imageList) {
       if (imageList[fileIndex] != null) {

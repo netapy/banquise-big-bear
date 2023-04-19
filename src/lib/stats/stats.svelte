@@ -4,8 +4,8 @@
   import { client, users, query, databases } from "../../store.js";
 
   onMount(() => {
-    userGraphGeneration();
-    gamesGraphGeneration();
+    //userGraphGeneration();
+    //gamesGraphGeneration();
   });
 
   let userSdk = users;
